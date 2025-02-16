@@ -1,6 +1,6 @@
 'use server';
 
-import { createAuthSession } from "@/lib/auth";
+import { createAuthSession, destroySession } from "@/lib/auth";
 import { hashUserPassword, verifyPassword } from "@/lib/hash";
 import { createUser, getUserByEmail } from "@/lib/user";
 import { GSP_NO_RETURNED_VALUE } from "next/dist/lib/constants";
@@ -67,4 +67,9 @@ export async function auth(mode, prevState, formData){
         return login(prevState, formData);
     }
     return signup(prevState, formData);
+}
+
+export async function logout() {
+    await destroySession();
+    redirect('/');
 }
